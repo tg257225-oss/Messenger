@@ -17,6 +17,15 @@ def listen_for_msg_from_serv(client):
 
 
 
+def send_msg_to_serv(client):
+    while 1:
+        message = input("Message: ")
+        if message != '':
+            client.sendall(message.encode())
+        else:
+            print("The message is currently empty.")
+            exit(0)
+
 
 
 def comms_to_server(client):
@@ -29,6 +38,7 @@ def comms_to_server(client):
         exit(0)
 
     threading.Thread(target=listen_for_msg_from_serv, args=(client, )).start()
+    send_msg_to_serv(client)
 
 
 def main():
@@ -40,6 +50,7 @@ def main():
         print(f"The client is now connected to the server.")
     except:
         print(f"Unable to connect to server {host} {port}.")
+        exit(0)
 
 
     comms_to_server(client)
