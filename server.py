@@ -21,5 +21,10 @@ def main():
     # max number of client connections the server can make
     server.listen(listener_limit)
 
+    # listens for client connections
+    while 1:
+        client, address = server.accept()
+        print(f"Successfully connected to client {address[0]} {address[1]}.")
+
 if __name__ == '__main__':
     main()
