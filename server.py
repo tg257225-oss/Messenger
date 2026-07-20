@@ -2,7 +2,7 @@ import socket
 import threading
 
 host = '127.0.0.1'
-port = '2345'
+port = 2345
 listener_limit = 4
 
 def main():
@@ -14,6 +14,7 @@ def main():
     try:
         # give server address in the form of host ip and port
         server.bind((host, port))
+        print("The server is now running.")
     except:
         print(f"Unable to bind to the host {host} and port {port}.")
 
