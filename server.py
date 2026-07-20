@@ -20,6 +20,7 @@ def listen_for_msg(client, username):
 
 # sends new msg to single client
 def send_msg_to_client(client, message):
+
     client.sendall(message.encode())
 
 # sends new msg to all clients on the server
@@ -37,14 +38,17 @@ def client_handler(client):
         username = client.recv(2048).decode('utf-8')
         if username != '':
             active_clients.append((username, client))
+            break
         else:
             print("There is no username.")
+
+    threading.Thread(target=listen_for_msg, args=(client, username, )).start()
 
 
 def main():
 
     # af_init = ipv4 address
-    # sock streem = tcp packs for communcaiton
+    # sock streem = tcp packs for communication
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     try:
@@ -61,7 +65,7 @@ def main():
     # listens for client connections
     while 1:
         client, address = server.accept()
-        print(f"Successfully connected to client {address[0]} {address[1]}.")
+        print(f"Successfully connected to the client {address[0]} {address[1]}.")
 
         threading.Thread(target=client_handler, args=(client, )).start()
 
