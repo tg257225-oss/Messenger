@@ -6,9 +6,28 @@ port = 2345
 listener_limit = 4
 active_clients = [] # ls of all active users
 
+
+# listens for msgs from clients
+def listen_for_msg(client, username):
+
+    while 1:
+        message = client.recv(2048).decode('utf-8')
+        if message != '':
+            final_msg = username + ': ' + message
+            send_msg_to_all(final_msg)
+        else:
+            print(f"The message sent from the client {username} is empty.")
+
+# sends new msg to single client
+def send_msg_to_client(client, message):
+    client.sendall(message.encode())
+
 # sends new msg to all clients on the server
-def send_msg_to_all(from_username, message):
-    pass
+def send_msg_to_all(message):
+
+    for user in active_clients:
+        send_msg_to_client(user[1], message)
+
 
 
 def client_handler(client):
