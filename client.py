@@ -2,7 +2,6 @@ import socket
 import threading
 host = '127.0.0.1'
 port = 2345
-
 def listen_for_msg_from_serv(client):
     while 1:
         message = client.recv(2048).decode('utf-8')
@@ -24,7 +23,7 @@ def send_msg_to_serv(client):
             client.sendall(message.encode())
         else:
             print("The message is currently empty.")
-            exit(0)
+
 
 
 
