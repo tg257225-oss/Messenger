@@ -11,6 +11,8 @@ SMALL_FONT = ("Lucida Sans", 11)
 FONT_COLOR = "#2B2A2A"
 WHITE = "white"
 
+def connect():
+    print("diddy")
 
 root = tk.Tk()
 root.geometry("600x600")
@@ -33,10 +35,13 @@ bottom_frame = tk.Frame(root, width=600, height=75, bg=DARK_BROWN)
 bottom_frame.grid(row=2, column=0, sticky=tk.NSEW)
 
 username_label = tk.Label(top_frame, text="Enter your username:", font=NORMAL_FONT, fg=FONT_COLOR, bg=LIGHT_BROWN)
-username_label.pack(side=tk.LEFT, padx=10 )
+username_label.pack(side=tk.LEFT, padx=(10,0) )
 
-username_textbox = tk.Entry(top_frame, font=NORMAL_FONT, bg=LIGHT_BROWN, fg=FONT_COLOR, width=25)
-username_textbox.pack(side=tk.RIGHT, padx=10, pady=(2, 0))
+username_textbox = tk.Entry(top_frame, font=NORMAL_FONT, bg=LIGHT_BROWN, fg=FONT_COLOR, width=20)
+username_textbox.pack(side=tk.LEFT, padx=(10,10), pady=(2, 0))
+
+username_button = tk.Button(top_frame, text="Join", font=NORMAL_FONT, fg=FONT_COLOR, bg=OFF_WHITE, command=connect, height=1, width=4)
+username_button.pack(side=tk.LEFT, padx=(10,10), pady=(1,0))
 
 
 host = '127.0.0.1'
