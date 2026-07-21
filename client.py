@@ -17,6 +17,10 @@ root.geometry("600x600")
 root.title("Messenger")
 root.resizable(False, False)
 
+root.grid_rowconfigure(0, weight=1)
+root.grid_rowconfigure(1, weight=4)
+root.grid_rowconfigure(1, weight=1)
+
 top_frame = tk.Frame(root, width=600, height=75, bg=LIGHT_BROWN)
 top_frame.grid(row=0, column=0, sticky=tk.NSEW)
 
