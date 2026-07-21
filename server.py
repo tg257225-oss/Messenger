@@ -52,6 +52,7 @@ def send_msg_to_all(message):
     usernames = ", ".join([user[0] for user in active_clients])
     print(f"Current active users: {usernames}")
 
+
     for user in active_clients:
         send_msg_to_client(user[1], message)
 
