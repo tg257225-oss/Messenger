@@ -18,20 +18,25 @@ root.title("Messenger")
 root.resizable(False, False)
 
 root.grid_rowconfigure(0, weight=1)
-root.grid_rowconfigure(1, weight=4)
-root.grid_rowconfigure(1, weight=1)
+root.grid_rowconfigure(1, weight=6)
+root.grid_rowconfigure(2, weight=1)
+root.grid_columnconfigure(0, weight=1)
 
-top_frame = tk.Frame(root, width=600, height=75, bg=LIGHT_BROWN)
+top_frame = tk.Frame(root, width=600, height=55, bg=LIGHT_BROWN)
 top_frame.grid(row=0, column=0, sticky=tk.NSEW)
+top_frame.pack_propagate(False)
 
-middle_frame = tk.Frame(root, width=600, height=450, bg=OFF_WHITE )
+middle_frame = tk.Frame(root, width=600, height=470, bg=OFF_WHITE )
 middle_frame.grid(row=1, column=0, sticky=tk.NSEW)
 
 bottom_frame = tk.Frame(root, width=600, height=75, bg=DARK_BROWN)
 bottom_frame.grid(row=2, column=0, sticky=tk.NSEW)
 
 username_label = tk.Label(top_frame, text="Enter your username:", font=NORMAL_FONT, fg=FONT_COLOR, bg=LIGHT_BROWN)
-username_label.pack(side=tk.LEFT, padx=10)
+username_label.pack(side=tk.LEFT, padx=10, anchor=tk.CENTER)
+
+username_textbox = tk.Entry(top_frame, font=NORMAL_FONT, bg=LIGHT_BROWN, fg=FONT_COLOR, width=25)
+username_textbox.pack(side=tk.RIGHT, padx=10, anchor=tk.CENTER)
 
 
 host = '127.0.0.1'
