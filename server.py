@@ -21,6 +21,7 @@ def listen_for_msg(client, username):
                 break
         except:
             remove_client(client, username)
+
             break
 
 
@@ -29,10 +30,15 @@ def remove_client(client, username):
     for user in active_clients:
         if user[1] == client:
             active_clients.remove(user)
+            print(f"Client {username} has disconnected.")
+            client.close()
             break
 
     usernames = ", ".join([user[0] for user in active_clients])
+    send_msg_to_all(f"Server: Client {username} has disconnected.")
     send_msg_to_all(f"Current active users: {usernames}")
+
+
 
 
 # sends new msg to single client
