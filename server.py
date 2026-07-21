@@ -11,12 +11,29 @@ active_clients = [] # ls of all active users
 def listen_for_msg(client, username):
 
     while 1:
-        message = client.recv(2048).decode('utf-8')
-        if message != '':
-            final_msg = username + ': ' + message
-            send_msg_to_all(final_msg)
-        else:
-            print(f"The message sent from the client {username} is empty.")
+        try:
+            message = client.recv(2048).decode('utf-8')
+            if message != '':
+                final_msg = username + ': ' + message
+                send_msg_to_all(final_msg)
+            else:
+                remove_client(client, username)
+                break
+        except:
+            remove_client(client, username)
+            break
+
+
+
+def remove_client(client, username):
+    for user in active_clients:
+        if user[1] == client:
+            active_clients.remove(user)
+            break
+
+    usernames = ", ".join([user[0] for user in active_clients])
+    send_msg_to_all(f"Current active users: {usernames}")
+
 
 # sends new msg to single client
 def send_msg_to_client(client, message):
@@ -25,6 +42,9 @@ def send_msg_to_client(client, message):
 
 # sends new msg to all clients on the server
 def send_msg_to_all(message):
+
+    usernames = ", ".join([user[0] for user in active_clients])
+    print(f"Current active users: {usernames}")
 
     for user in active_clients:
         send_msg_to_client(user[1], message)
@@ -38,6 +58,8 @@ def client_handler(client):
         username = client.recv(2048).decode('utf-8')
         if username != '':
             active_clients.append((username, client))
+            usernames = ", ".join([user[0] for user in active_clients])
+            send_msg_to_all(f"Current active users: {usernames}")
             break
         else:
             print("There is no username.")
@@ -57,6 +79,7 @@ def main():
         print(f"The server is now running on {host} {port}.")
     except:
         print(f"Unable to bind to the host {host} and port {port}.")
+
 
 
     # max number of client connections the server can make
