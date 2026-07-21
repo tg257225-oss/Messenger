@@ -6,8 +6,9 @@ def listen_for_msg_from_serv(client):
     while 1:
         message = client.recv(2048).decode('utf-8')
         if message != '':
-            username = message.split(": ")[0]
-            content = message.split(": ")[1]
+            parts = message.split(": ", 1)
+            username = parts[0]
+            content = parts[1] if len(parts) > 1 else ""
 
 
             print(f"[{username}] {content}")
