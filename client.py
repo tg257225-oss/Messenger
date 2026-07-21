@@ -9,6 +9,15 @@ root.geometry("600x600")
 root.title("Messenger")
 root.resizable(False, False)
 
+top_frame = tk.Frame(root, width=600, height=75, bg='red')
+top_frame.grid(row=0, column=0, sticky=tk.NSEW)
+
+middle_frame = tk.Frame(root, width=600, height=450, bg='green' )
+middle_frame.grid(row=1, column=0, sticky=tk.NSEW)
+
+bottom_frame = tk.Frame(root, width=600, height=75, bg='blue' )
+bottom_frame.grid(row=2, column=0, sticky=tk.NSEW)
+
 host = '127.0.0.1'
 port = 2345
 
