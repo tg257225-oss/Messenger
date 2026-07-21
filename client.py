@@ -3,20 +3,32 @@ import threading
 import tkinter as tk
 import sys
 
+DARK_BROWN = "#453D3C"
+LIGHT_BROWN = "#9C8989"
+OFF_WHITE = "#EBDFDF"
+NORMAL_FONT = ("Lucida Sans", 15)
+SMALL_FONT = ("Lucida Sans", 11)
+FONT_COLOR = "#2B2A2A"
+WHITE = "white"
+
 
 root = tk.Tk()
 root.geometry("600x600")
 root.title("Messenger")
 root.resizable(False, False)
 
-top_frame = tk.Frame(root, width=600, height=75, bg='red')
+top_frame = tk.Frame(root, width=600, height=75, bg=LIGHT_BROWN)
 top_frame.grid(row=0, column=0, sticky=tk.NSEW)
 
-middle_frame = tk.Frame(root, width=600, height=450, bg='green' )
+middle_frame = tk.Frame(root, width=600, height=450, bg=OFF_WHITE )
 middle_frame.grid(row=1, column=0, sticky=tk.NSEW)
 
-bottom_frame = tk.Frame(root, width=600, height=75, bg='blue' )
+bottom_frame = tk.Frame(root, width=600, height=75, bg=DARK_BROWN)
 bottom_frame.grid(row=2, column=0, sticky=tk.NSEW)
+
+username_label = tk.Label(top_frame, text="Enter your username:", font=NORMAL_FONT, fg=FONT_COLOR, bg=LIGHT_BROWN)
+username_label.pack(side=tk.LEFT, padx=10)
+
 
 host = '127.0.0.1'
 port = 2345
