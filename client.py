@@ -26,12 +26,13 @@ def msg_update(message):
 
 def connect():
     username_button.config(state=tk.NORMAL)
+    username_textbox.config(state=tk.NORMAL)
     # connect to server
     try:
         client.connect((host, port))
-        print(f"The client {client} is now connected to the server.")
         msg_update("[SERVER] Successfully connected to the server.")
         username_button.config(state=tk.DISABLED)
+        username_textbox.config(state=tk.DISABLED)
     except:
         messagebox.showerror("Error", f"Unable to connect to server {host} {port}.")
         #exit(0)
