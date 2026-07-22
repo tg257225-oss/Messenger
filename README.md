@@ -6,3 +6,4 @@ Messenger follows the typical flow of any messaging system. Simply, if you enter
 ## Features
 * End-to-End Encryption - Only the people actively communicating in the chat can see the content of the messages.
 * Real-time Messaging - The usage of sockets allows users to speak with each other instantly rather than having a delay.
+* An actual GUI!!! - Makes the messaging system look clean and not yucky like my other projects..
