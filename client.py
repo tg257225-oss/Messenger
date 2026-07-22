@@ -2,6 +2,11 @@ import socket
 import threading
 import tkinter as tk
 import sys
+from tkinter import scrolledtext
+from tkinter import messagebox
+
+host = '127.0.0.1'
+port = 2345
 
 DARK_BROWN = "#453D3C"
 LIGHT_BROWN = "#9C8989"
@@ -10,14 +15,54 @@ NORMAL_FONT = ("Lucida Sans", 16)
 SMALL_FONT = ("Lucida Sans", 11)
 FONT_COLOR = "#2B2A2A"
 WHITE = "white"
+BG = "#EDEBEB"
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+def msg_update(message):
+    msg_box.config(state=tk.NORMAL)
+    msg_box.insert(tk.END, message + '\n')
+    msg_box.config(state=tk.DISABLED)
 
 def connect():
-    print("diddy")
+    username_button.config(state=tk.NORMAL)
+    # connect to server
+    try:
+        client.connect((host, port))
+        print(f"The client {client} is now connected to the server.")
+        msg_update("[SERVER] Successfully connected to the server.")
+        username_button.config(state=tk.DISABLED)
+    except:
+        messagebox.showerror("Error", f"Unable to connect to server {host} {port}.")
+        #exit(0)
+
+    username = username_textbox.get()
+    if username != '':
+        client.sendall(username.encode())
+    else:
+        messagebox.showerror("Error", "The username field cannot be empty.")
+        #exit(0)
+
+    threading.Thread(target=listen_for_msg_from_serv, args=(client, ), daemon=True).start()
+
+
+def send_message(event=None):
+    message = message_txtbox.get()
+    if message != '':
+        client.sendall(message.encode())
+        message_txtbox.delete(0, tk.END)
+    else:
+        sys.stdout.write(" ")
+        sys.stdout.flush()
+
+
+
 
 root = tk.Tk()
 root.geometry("600x600")
 root.title("Messenger")
 root.resizable(False, False)
+
 
 root.grid_rowconfigure(0, weight=1)
 root.grid_rowconfigure(1, weight=6)
@@ -31,21 +76,35 @@ top_frame.pack_propagate(False)
 middle_frame = tk.Frame(root, width=600, height=470, bg=OFF_WHITE )
 middle_frame.grid(row=1, column=0, sticky=tk.NSEW)
 
-bottom_frame = tk.Frame(root, width=600, height=75, bg=DARK_BROWN)
+bottom_frame = tk.Frame(root, width=600, height=55, bg=DARK_BROWN)
 bottom_frame.grid(row=2, column=0, sticky=tk.NSEW)
+bottom_frame.pack_propagate(False)
 
 username_label = tk.Label(top_frame, text="Enter your username:", font=NORMAL_FONT, fg=FONT_COLOR, bg=LIGHT_BROWN)
 username_label.pack(side=tk.LEFT, padx=(10,0) )
 
-username_textbox = tk.Entry(top_frame, font=NORMAL_FONT, bg=LIGHT_BROWN, fg=FONT_COLOR, width=20)
+username_textbox = tk.Entry(top_frame, font=NORMAL_FONT, bg=BG, fg=FONT_COLOR, width=20)
 username_textbox.pack(side=tk.LEFT, padx=(10,10), pady=(2, 0))
 
-username_button = tk.Button(top_frame, text="Join", font=NORMAL_FONT, fg=FONT_COLOR, bg=OFF_WHITE, command=connect, height=1, width=4)
-username_button.pack(side=tk.LEFT, padx=(10,10), pady=(1,0))
+username_button = tk.Button(top_frame, text="Join", font=SMALL_FONT, fg=FONT_COLOR, bg=OFF_WHITE, command=connect, height=1, width=4)
+username_button.pack(side=tk.LEFT, padx=(10,10), pady=(2,0))
 
 
-host = '127.0.0.1'
-port = 2345
+message_txtbox = tk.Entry(bottom_frame, font=NORMAL_FONT, bg=BG, width=38)
+message_txtbox.pack(side=tk.LEFT, padx=12)
+
+msg_button = tk.Button(bottom_frame, text="Send", font=SMALL_FONT, fg=FONT_COLOR, bg=OFF_WHITE, command=send_message)
+msg_button.pack(side=tk.LEFT, padx=10)
+
+msg_box = scrolledtext.ScrolledText(middle_frame, font=SMALL_FONT, bg=OFF_WHITE, fg=FONT_COLOR, width=67, height=29)
+msg_box.config(state=tk.DISABLED)
+msg_box.pack(side=tk.TOP)
+
+
+
+
+root.bind("<Return>", send_message)
+
 
 def listen_for_msg_from_serv(client):
     while 1:
@@ -58,56 +117,19 @@ def listen_for_msg_from_serv(client):
 
 
             sys.stdout.write("\r\033[K")
-            print(f"[{username}] {content}")
+            msg_update(f"[{username}] {content}")
 
             sys.stdout.write(" ")
             sys.stdout.flush()
 
         else:
-            print("The message received from the client is empty.")
-
-
-
-def send_msg_to_serv(client):
-    while 1:
-        message = sys.stdin.readline().strip()
-        if message != '':
-            client.sendall(message.encode())
-        else:
-            sys.stdout.write(" ")
-            sys.stdout.flush()
-
-
-
-
-def comms_to_server(client):
-
-    username = input("Enter your username: ")
-    if username != '':
-        client.sendall(username.encode())
-    else:
-        print("The username field cannot be empty.")
-        exit(0)
-
-    threading.Thread(target=listen_for_msg_from_serv, args=(client, ), daemon=True).start()
-    send_msg_to_serv(client)
+            messagebox.showerror("Error","The message received from the client is empty.")
 
 
 def main():
     root.mainloop()
 
-    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # connect to server
-    try:
-        client.connect((host, port))
-        print(f"The client is now connected to the server.")
-    except:
-        print(f"Unable to connect to server {host} {port}.")
-        exit(0)
-
-
-    comms_to_server(client)
 
 if __name__ == '__main__':
     main()
