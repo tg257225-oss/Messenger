@@ -17,6 +17,11 @@ FONT_COLOR = "#2B2A2A"
 WHITE = "white"
 BG = "#EDEBEB"
 
+def msg_update(message):
+    msg_box.config(state=tk.NORMAL)
+    msg_box.insert(tk.END, message + '\n')
+    msg_box.config(state=tk.DISABLED)
+
 
 root = tk.Tk()
 root.geometry("600x200")
@@ -61,7 +66,7 @@ def remove_client(client, username):
     for user in active_clients:
         if user[1] == client:
             active_clients.remove(user)
-            print(f"Client {username} has disconnected.")
+            msg_update(f"Client {username} has disconnected.")
             client.close()
             break
 
@@ -81,7 +86,7 @@ def send_msg_to_client(client, message):
 def send_msg_to_all(message):
 
     usernames = ", ".join([user[0] for user in active_clients])
-    print(f"Current active users: {usernames}")
+    msg_update(f"Current active users: {usernames}")
 
 
     for user in active_clients:
@@ -100,13 +105,13 @@ def client_handler(client):
             send_msg_to_all(f"Current active users: {usernames}")
             break
         else:
-            print("There is no username.")
+            msg_update("There is no username.")
 
     threading.Thread(target=listen_for_msg, args=(client, username, )).start()
 
 
-def main():
-    root.mainloop()
+def server_loop():
+
 
     # af_init = ipv4 address
     # sock streem = tcp packs for communication
@@ -115,9 +120,10 @@ def main():
     try:
         # give server address in the form of host ip and port
         server.bind((host, port))
-        print(f"The server is now running on {host} {port}.")
+        msg_update(f"The server is now running on {host} {port}.")
     except:
-        print(f"Unable to bind to the host {host} and port {port}.")
+        msg_update(f"Unable to bind to the host {host} and port {port}.")
+        return
 
 
 
@@ -127,9 +133,15 @@ def main():
     # listens for client connections
     while 1:
         client, address = server.accept()
-        print(f"Successfully connected to the client {address[0]} {address[1]}.")
+        msg_update(f"Successfully connected to the client {address[0]} {address[1]}.")
 
         threading.Thread(target=client_handler, args=(client, )).start()
+
+
+
+def main():
+    threading.Thread(target=server_loop, daemon=True).start()
+    root.mainloop()
 
 if __name__ == '__main__':
     main()
