@@ -71,7 +71,7 @@ def remove_client(client, username):
             break
 
     usernames = ", ".join([user[0] for user in active_clients])
-    send_msg_to_all(f"[SERVER]: Client {username} has disconnected.")
+    send_msg_to_all(f"SERVER: Client {username} has disconnected.")
     send_msg_to_all(f"Current active users: {usernames}")
 
 
