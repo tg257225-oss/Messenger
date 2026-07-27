@@ -1,10 +1,11 @@
+import os
 import socket
 import threading
-import tkinter as tk
-from tkinter import scrolledtext
+#import tkinter as tk
+#from tkinter import scrolledtext
 
-host = '127.0.0.1'
-port = 2345
+host = '0.0.0.0'
+port = int(os.environ.get("PORT", 2345))
 listener_limit = 4
 active_clients = [] # ls of all active users
 
