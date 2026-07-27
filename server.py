@@ -18,10 +18,10 @@ FONT_COLOR = "#2B2A2A"
 WHITE = "white"
 BG = "#EDEBEB"
 
-def msg_update(message):
-    msg_box.config(state=tk.NORMAL)
-    msg_box.insert(tk.END, message + '\n')
-    msg_box.config(state=tk.DISABLED)
+#def msg_update(message):
+    #msg_box.config(state=tk.NORMAL)
+    #msg_box.insert(tk.END, message + '\n')
+    #msg_box.config(state=tk.DISABLED)
 
 
 #root = tk.Tk()
