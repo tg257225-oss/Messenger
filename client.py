@@ -5,7 +5,7 @@ import sys
 from tkinter import scrolledtext
 from tkinter import messagebox
 
-host = '127.0.0.1'
+host = '0.0.0.0'
 port = 2345
 
 DARK_BROWN = "#453D3C"

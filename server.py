@@ -1,11 +1,10 @@
-import os
 import socket
 import threading
-#import tkinter as tk
-#from tkinter import scrolledtext
+import tkinter as tk
+from tkinter import scrolledtext
 
 host = '0.0.0.0'
-port = int(os.environ.get("PORT", 2345))
+port = 2345
 listener_limit = 4
 active_clients = [] # ls of all active users
 
@@ -18,31 +17,31 @@ FONT_COLOR = "#2B2A2A"
 WHITE = "white"
 BG = "#EDEBEB"
 
-#def msg_update(message):
-    #msg_box.config(state=tk.NORMAL)
-    #msg_box.insert(tk.END, message + '\n')
-    #msg_box.config(state=tk.DISABLED)
+def msg_update(message):
+    msg_box.config(state=tk.NORMAL)
+    msg_box.insert(tk.END, message + '\n')
+    msg_box.config(state=tk.DISABLED)
 
 
-#root = tk.Tk()
-#root.geometry("600x200")
-#root.title("Messenger Server")
-#root.resizable(False, False)
+root = tk.Tk()
+root.geometry("600x200")
+root.title("Messenger Server")
+root.resizable(False, False)
 
-#top_frame = tk.Frame(root, width=600, height=50, bg=LIGHT_BROWN)
-#top_frame.grid(row=0, column=0, sticky=tk.NSEW)
-#top_frame.pack_propagate(False)
+top_frame = tk.Frame(root, width=600, height=50, bg=LIGHT_BROWN)
+top_frame.grid(row=0, column=0, sticky=tk.NSEW)
+top_frame.pack_propagate(False)
 
-#bottom_frame = tk.Frame(root, width=600, height=150, bg=OFF_WHITE )
-#bottom_frame.grid(row=1, column=0, sticky=tk.NSEW)
-#bottom_frame.pack_propagate(False)
+bottom_frame = tk.Frame(root, width=600, height=150, bg=OFF_WHITE )
+bottom_frame.grid(row=1, column=0, sticky=tk.NSEW)
+bottom_frame.pack_propagate(False)
 
-#server_label = tk.Label(top_frame, text="Server", font=NORMAL_FONT, fg=FONT_COLOR, bg=LIGHT_BROWN)
-#server_label.pack(side=tk.LEFT, padx=(10,0) )
+server_label = tk.Label(top_frame, text="Server", font=NORMAL_FONT, fg=FONT_COLOR, bg=LIGHT_BROWN)
+server_label.pack(side=tk.LEFT, padx=(10,0) )
 
-#msg_box = scrolledtext.ScrolledText(bottom_frame, font=SMALL_FONT, bg=OFF_WHITE, fg=FONT_COLOR, width=67, height=29)
-#msg_box.config(state=tk.DISABLED)
-#msg_box.pack(side=tk.TOP)
+msg_box = scrolledtext.ScrolledText(bottom_frame, font=SMALL_FONT, bg=OFF_WHITE, fg=FONT_COLOR, width=67, height=29)
+msg_box.config(state=tk.DISABLED)
+msg_box.pack(side=tk.TOP)
 
 # listens for msgs from clients
 def listen_for_msg(client, username):
