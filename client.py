@@ -8,7 +8,7 @@ from tkinter import simpledialog
 
 root = tk.Tk()
 root.withdraw()
-target_host = simpledialog.askstring("Connect", "Enter the Server's IP Address:\n (type local host)")
+target_host = simpledialog.askstring("Connect", "Enter the Server's IP Address:\n (type localhost)")
 
 if not target_host:
     sys.exit(0)
