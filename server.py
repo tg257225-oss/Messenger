@@ -2,6 +2,7 @@ import socket
 import threading
 import tkinter as tk
 from tkinter import scrolledtext
+import urllib.request
 
 host = '0.0.0.0'
 port = 2345
@@ -21,6 +22,7 @@ def msg_update(message):
     msg_box.config(state=tk.NORMAL)
     msg_box.insert(tk.END, message + '\n')
     msg_box.config(state=tk.DISABLED)
+
 
 
 root = tk.Tk()
@@ -121,6 +123,7 @@ def server_loop():
         # give server address in the form of host ip and port
         server.bind((host, port))
         msg_update(f"The server is now running on {host} {port}.")
+
     except:
         msg_update(f"Unable to bind to the host {host} and port {port}.")
         return

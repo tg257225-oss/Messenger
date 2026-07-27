@@ -4,8 +4,16 @@ import tkinter as tk
 import sys
 from tkinter import scrolledtext
 from tkinter import messagebox
+from tkinter import simpledialog
 
-host = '0.0.0.0'
+root = tk.Tk()
+root.withdraw()
+target_host = simpledialog.askstring("Connect", "Enter the Server's IP Address:\n (type local host)")
+
+if not target_host:
+    sys.exit(0)
+
+host = target_host
 port = 2345
 
 DARK_BROWN = "#453D3C"
@@ -59,7 +67,7 @@ def send_message(event=None):
 
 
 
-root = tk.Tk()
+root.deiconify()
 root.geometry("600x600")
 root.title("Messenger")
 root.resizable(False, False)
