@@ -24,25 +24,25 @@ def msg_update(message):
     msg_box.config(state=tk.DISABLED)
 
 
-root = tk.Tk()
-root.geometry("600x200")
-root.title("Messenger Server")
-root.resizable(False, False)
+#root = tk.Tk()
+#root.geometry("600x200")
+#root.title("Messenger Server")
+#root.resizable(False, False)
 
-top_frame = tk.Frame(root, width=600, height=50, bg=LIGHT_BROWN)
-top_frame.grid(row=0, column=0, sticky=tk.NSEW)
-top_frame.pack_propagate(False)
+#top_frame = tk.Frame(root, width=600, height=50, bg=LIGHT_BROWN)
+#top_frame.grid(row=0, column=0, sticky=tk.NSEW)
+#top_frame.pack_propagate(False)
 
-bottom_frame = tk.Frame(root, width=600, height=150, bg=OFF_WHITE )
-bottom_frame.grid(row=1, column=0, sticky=tk.NSEW)
-bottom_frame.pack_propagate(False)
+#bottom_frame = tk.Frame(root, width=600, height=150, bg=OFF_WHITE )
+#bottom_frame.grid(row=1, column=0, sticky=tk.NSEW)
+#bottom_frame.pack_propagate(False)
 
-server_label = tk.Label(top_frame, text="Server", font=NORMAL_FONT, fg=FONT_COLOR, bg=LIGHT_BROWN)
-server_label.pack(side=tk.LEFT, padx=(10,0) )
+#server_label = tk.Label(top_frame, text="Server", font=NORMAL_FONT, fg=FONT_COLOR, bg=LIGHT_BROWN)
+#server_label.pack(side=tk.LEFT, padx=(10,0) )
 
-msg_box = scrolledtext.ScrolledText(bottom_frame, font=SMALL_FONT, bg=OFF_WHITE, fg=FONT_COLOR, width=67, height=29)
-msg_box.config(state=tk.DISABLED)
-msg_box.pack(side=tk.TOP)
+#msg_box = scrolledtext.ScrolledText(bottom_frame, font=SMALL_FONT, bg=OFF_WHITE, fg=FONT_COLOR, width=67, height=29)
+#msg_box.config(state=tk.DISABLED)
+#msg_box.pack(side=tk.TOP)
 
 # listens for msgs from clients
 def listen_for_msg(client, username):
